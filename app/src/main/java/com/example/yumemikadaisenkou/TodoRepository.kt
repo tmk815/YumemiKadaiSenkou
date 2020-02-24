@@ -45,7 +45,7 @@ class TodoRepository(application: Application) {
         return allTodos
     }
 
-    fun findSelect(type: Int) : LiveData<List<Todo>> {
+    fun findSelect(type: Int): LiveData<List<Todo>> {
         return todoDao.findSelect(type)
     }
 
@@ -57,36 +57,35 @@ class TodoRepository(application: Application) {
 
     fun delete(todo: Todo) {
         scope.launch {
-            deleteTodoTask(todoDao,todo)
+            deleteTodoTask(todoDao, todo)
         }
     }
 
-    private suspend fun insertTodoTask(todoDao: TodoDao,todo: Todo){
+    private suspend fun insertTodoTask(todoDao: TodoDao, todo: Todo) {
         withContext(Dispatchers.IO) {
             todoDao.insert(todo)
         }
     }
 
-    private suspend fun updateTodoTask(todoDao: TodoDao,todo: Todo){
+    private suspend fun updateTodoTask(todoDao: TodoDao, todo: Todo) {
         withContext(Dispatchers.IO) {
             todoDao.update(todo)
         }
     }
 
-    private suspend fun deleteCompletedTodosTask(todoDao: TodoDao){
+    private suspend fun deleteCompletedTodosTask(todoDao: TodoDao) {
         withContext(Dispatchers.IO) {
             todoDao.deleteCompleted()
         }
     }
 
-    private suspend fun deleteAllTask(todoDao: TodoDao){
+    private suspend fun deleteAllTask(todoDao: TodoDao) {
         withContext(Dispatchers.IO) {
             todoDao.deleteAll()
         }
     }
 
-    private suspend fun deleteTodoTask(todoDao: TodoDao,todo:Todo){
-
+    private suspend fun deleteTodoTask(todoDao: TodoDao, todo: Todo) {
         withContext(Dispatchers.IO) {
             todoDao.delete(todo)
         }

@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.yumemikadaisenkou.R
 import com.example.yumemikadaisenkou.adapter.TodoAdapter
 import com.example.yumemikadaisenkou.db.entity.Todo
@@ -50,7 +52,25 @@ class MainActivity : AppCompatActivity() {
                     adapter.setTodos(it)
                 }
             })
+
+    // スワイプされたときの挙動を定義
+    val callback = object :
+        ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val swipedPosition = viewHolder.adapterPosition
+            adapter.remove(swipedPosition)
+        }
     }
+    ItemTouchHelper(callback).attachToRecyclerView(recyclerView)
+}
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)

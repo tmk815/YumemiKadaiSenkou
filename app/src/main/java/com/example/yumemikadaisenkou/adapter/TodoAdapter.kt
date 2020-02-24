@@ -48,6 +48,12 @@ class TodoAdapter(private val viewModel: TodoViewModel) :
         return todos.size
     }
 
+    fun remove(position: Int) {
+        val currentTodo = todos[position]
+        viewModel.delete(currentTodo)
+        notifyItemRemoved(position)
+    }
+
     fun setTodos(todos: List<Todo>) {
         this.todos = todos
         notifyDataSetChanged()
