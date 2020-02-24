@@ -5,14 +5,17 @@ import androidx.lifecycle.LiveData
 import com.example.yumemikadaisenkou.db.TodoDatabase
 import com.example.yumemikadaisenkou.db.dao.TodoDao
 import com.example.yumemikadaisenkou.db.entity.Todo
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TodoRepository(application: Application) {
     private val todoDao: TodoDao
 
     private val allTodos: LiveData<List<Todo>>
+
+    val scope = CoroutineScope(Dispatchers.IO)
 
     init {
         val database: TodoDatabase = TodoDatabase.getInstance(application.applicationContext)!!
@@ -21,20 +24,20 @@ class TodoRepository(application: Application) {
     }
 
     fun insert(todo: Todo) {
-        GlobalScope.async(Dispatchers.Main){
-            todoDao.insert(todo)
+        scope.launch {
+            insertTodoTask(todoDao, todo)
         }
     }
 
     fun deleteCompleted() {
-        GlobalScope.async(Dispatchers.Main){
-            todoDao.deleteCompleted()
+        scope.launch {
+            deleteCompletedTodosTask(todoDao)
         }
     }
 
     fun deleteAll() {
-        GlobalScope.async(Dispatchers.Main){
-            todoDao.deleteAll()
+        scope.launch {
+            deleteAllTask(todoDao)
         }
     }
 
@@ -47,13 +50,44 @@ class TodoRepository(application: Application) {
     }
 
     fun update(todo: Todo) {
-        GlobalScope.async(Dispatchers.Main){
-            todoDao.update(todo)
+        scope.launch {
+            updateTodoTask(todoDao, todo)
         }
     }
 
     fun delete(todo: Todo) {
-        GlobalScope.async(Dispatchers.Main){
+        scope.launch {
+            deleteTodoTask(todoDao,todo)
+        }
+    }
+
+    private suspend fun insertTodoTask(todoDao: TodoDao,todo: Todo){
+        withContext(Dispatchers.IO) {
+            todoDao.insert(todo)
+        }
+    }
+
+    private suspend fun updateTodoTask(todoDao: TodoDao,todo: Todo){
+        withContext(Dispatchers.IO) {
+            todoDao.update(todo)
+        }
+    }
+
+    private suspend fun deleteCompletedTodosTask(todoDao: TodoDao){
+        withContext(Dispatchers.IO) {
+            todoDao.deleteCompleted()
+        }
+    }
+
+    private suspend fun deleteAllTask(todoDao: TodoDao){
+        withContext(Dispatchers.IO) {
+            todoDao.deleteAll()
+        }
+    }
+
+    private suspend fun deleteTodoTask(todoDao: TodoDao,todo:Todo){
+
+        withContext(Dispatchers.IO) {
             todoDao.delete(todo)
         }
     }
