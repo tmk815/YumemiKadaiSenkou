@@ -1,11 +1,13 @@
 package com.example.yumemikadaisenkou
 
 import android.app.Application
-import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import com.example.yumemikadaisenkou.db.TodoDatabase
 import com.example.yumemikadaisenkou.db.dao.TodoDao
 import com.example.yumemikadaisenkou.db.entity.Todo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 
 class TodoRepository(application: Application) {
     private val todoDao: TodoDao
@@ -19,15 +21,21 @@ class TodoRepository(application: Application) {
     }
 
     fun insert(todo: Todo) {
-        val insertTodoAsyncTask = InsertTodoAsyncTask(todoDao).execute(todo)
+        GlobalScope.async(Dispatchers.Default){
+            todoDao.insert(todo)
+        }
     }
 
     fun deleteCompleted() {
-        val DeleteCompletedTodosAsyncTask = DeleteCompletedTodosAsyncTask(todoDao).execute()
+        GlobalScope.async(Dispatchers.Default){
+            todoDao.deleteCompleted()
+        }
     }
 
     fun deleteAll() {
-        val DeleteAllAsyncTask = DeleteAllAsyncTask(todoDao).execute()
+        GlobalScope.async(Dispatchers.Default){
+            todoDao.deleteAll()
+        }
     }
 
     fun findAll(): LiveData<List<Todo>> {
@@ -39,46 +47,14 @@ class TodoRepository(application: Application) {
     }
 
     fun update(todo: Todo) {
-        val updateTodoAsyncTask = UpdateTodoAsyncTask(todoDao).execute(todo)
+        GlobalScope.async(Dispatchers.Default){
+            todoDao.update(todo)
+        }
     }
 
     fun delete(todo: Todo) {
-        val DeleteTodoAsyncTask = DeleteTodoAsyncTask(todoDao).execute(todo)
-    }
-
-    private class InsertTodoAsyncTask(val todoDao: TodoDao) : AsyncTask<Todo, Unit, Unit>() {
-
-        override fun doInBackground(vararg p0: Todo?) {
-            todoDao.insert(p0[0]!!)
-        }
-    }
-
-    private class UpdateTodoAsyncTask(val todoDao: TodoDao) : AsyncTask<Todo, Unit, Unit>() {
-
-        override fun doInBackground(vararg p0: Todo?) {
-            todoDao.update(p0[0]!!)
-        }
-    }
-
-    private class DeleteCompletedTodosAsyncTask(val todoDao: TodoDao) :
-        AsyncTask<Unit, Unit, Unit>() {
-
-        override fun doInBackground(vararg p0: Unit?) {
-            todoDao.deleteCompleted()
-        }
-    }
-
-    private class DeleteAllAsyncTask(val todoDao: TodoDao) : AsyncTask<Unit, Unit, Unit>() {
-
-        override fun doInBackground(vararg p0: Unit?) {
-            todoDao.deleteAll()
-        }
-    }
-
-    private class DeleteTodoAsyncTask(val todoDao: TodoDao) : AsyncTask<Todo, Unit, Unit>() {
-
-        override fun doInBackground(vararg p0: Todo?) {
-            todoDao.delete(p0[0]!!)
+        GlobalScope.async(Dispatchers.Default){
+            todoDao.delete(todo)
         }
     }
 }
