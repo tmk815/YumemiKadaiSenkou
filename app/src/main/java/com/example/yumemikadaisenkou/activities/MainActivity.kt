@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.yumemikadaisenkou.R
 import com.example.yumemikadaisenkou.adapter.TodoAdapter
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        todoViewModel = ViewModelProviders.of(this).get(TodoViewModel::class.java)
+        todoViewModel = ViewModelProvider(this).get(TodoViewModel::class.java)
 
         adapter =  TodoAdapter(todoViewModel)
 
