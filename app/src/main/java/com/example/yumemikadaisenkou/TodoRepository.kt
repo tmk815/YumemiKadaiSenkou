@@ -21,19 +21,19 @@ class TodoRepository(application: Application) {
     }
 
     fun insert(todo: Todo) {
-        GlobalScope.async(Dispatchers.Default){
+        GlobalScope.async(Dispatchers.Main){
             todoDao.insert(todo)
         }
     }
 
     fun deleteCompleted() {
-        GlobalScope.async(Dispatchers.Default){
+        GlobalScope.async(Dispatchers.Main){
             todoDao.deleteCompleted()
         }
     }
 
     fun deleteAll() {
-        GlobalScope.async(Dispatchers.Default){
+        GlobalScope.async(Dispatchers.Main){
             todoDao.deleteAll()
         }
     }
@@ -47,13 +47,13 @@ class TodoRepository(application: Application) {
     }
 
     fun update(todo: Todo) {
-        GlobalScope.async(Dispatchers.Default){
+        GlobalScope.async(Dispatchers.Main){
             todoDao.update(todo)
         }
     }
 
     fun delete(todo: Todo) {
-        GlobalScope.async(Dispatchers.Default){
+        GlobalScope.async(Dispatchers.Main){
             todoDao.delete(todo)
         }
     }
