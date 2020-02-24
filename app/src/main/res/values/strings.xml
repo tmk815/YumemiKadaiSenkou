@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">YumemiKadaiSenkou</string>
+    <string name="todo_hint">Todo</string>
+    <string name="menu_save">save</string>
+    <string name="menu_filter_all">All</string>
+    <string name="menu_filter_active">Active</string>
+    <string name="menu_filter_completed">Completed</string>
+    <string name="menu_delete_all">Delete All Todos</string>
+    <string name="menu_delete_completed">Delete Completed Todos</string>
+    <string name="menu_filter">Filter</string>
 </resources>
