@@ -1,10 +1,12 @@
 package com.example.yumemikadaisenkou.activities
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.yumemikadaisenkou.R
@@ -19,6 +21,10 @@ class AddTodoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_todo)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
+
+        edit_text_todo.requestFocus()
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(edit_text_todo, 0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
