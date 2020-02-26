@@ -10,7 +10,7 @@ interface TodoDao {
     fun createTodo(todo: Todo)
 
     @Insert
-    fun insert(todo: Todo)
+    suspend fun insert(todo: Todo)
 
     @Query("SELECT * FROM todo_table")
     fun findAll(): LiveData<List<Todo>>
@@ -19,14 +19,14 @@ interface TodoDao {
     fun findSelect(type: Int): LiveData<List<Todo>>
 
     @Query("DELETE FROM todo_table")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Update
-    fun update(todo: Todo)
+    suspend fun update(todo: Todo)
 
     @Delete
-    fun delete(todo: Todo)
+    suspend fun delete(todo: Todo)
 
     @Query("DELETE FROM todo_table WHERE completed = 1")
-    fun deleteCompleted()
+    suspend fun deleteCompleted()
 }
