@@ -1,5 +1,6 @@
 package com.example.yumemikadaisenkou.adapter
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,12 @@ class TodoAdapter(private val viewModel: TodoViewModel) :
     override fun onBindViewHolder(holder: TodoHolder, position: Int) {
         val currentTodo = todos[position]
         holder.checkBox.isChecked = currentTodo.completed != 0
+        if (holder.checkBox.isChecked) {
+            holder.todoText.paintFlags = holder.todoText.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            holder.todoText.paint.isAntiAlias = true
+        } else {
+            holder.todoText.paintFlags = 0
+        }
         holder.todoText.setText(currentTodo.todoText, TextView.BufferType.NORMAL)
 
         holder.checkBox.setOnClickListener {
