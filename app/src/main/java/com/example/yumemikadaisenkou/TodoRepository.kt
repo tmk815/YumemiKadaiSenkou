@@ -50,34 +50,4 @@ class TodoRepository(application: Application) {
     suspend fun delete(todo: Todo) {
         todoDao.delete(todo)
     }
-
-//    private suspend fun insertTodoTask(todoDao: TodoDao, todo: Todo) {
-//        withContext(Dispatchers.IO) {
-//            todoDao.insert(todo)
-//        }
-//    }
-//
-//    private suspend fun updateTodoTask(todoDao: TodoDao, todo: Todo) {
-//        withContext(Dispatchers.IO) {
-//            todoDao.update(todo)
-//        }
-//    }
-//
-//    private suspend fun deleteCompletedTodosTask(todoDao: TodoDao) {
-//        withContext(Dispatchers.IO) {
-//            todoDao.deleteCompleted()
-//        }
-//    }
-//
-//    private suspend fun deleteAllTask(todoDao: TodoDao) {
-//        withContext(Dispatchers.IO) {
-//            todoDao.deleteAll()
-//        }
-//    }
-//
-//    private suspend fun deleteTodoTask(todoDao: TodoDao, todo: Todo) {
-//        withContext(Dispatchers.IO) {
-//            todoDao.delete(todo)
-//        }
-//    }
 }
