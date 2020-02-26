@@ -23,7 +23,8 @@ class AddTodoActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
 
         edit_text_todo.requestFocus()
-        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(edit_text_todo, 0)
     }
 
