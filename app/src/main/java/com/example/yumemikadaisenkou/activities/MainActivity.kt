@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         todoViewModel = ViewModelProvider(this).get(TodoViewModel::class.java)
 
-        adapter =  TodoAdapter(todoViewModel)
+        adapter = TodoAdapter(todoViewModel)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
@@ -53,24 +53,24 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 
-    // スワイプされたときの挙動を定義
-    val callback = object :
-        ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            return false
-        }
+        // スワイプされたときの挙動を定義
+        val callback = object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
 
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            val swipedPosition = viewHolder.adapterPosition
-            adapter.remove(swipedPosition)
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val swipedPosition = viewHolder.adapterPosition
+                adapter.remove(swipedPosition)
+            }
         }
+        ItemTouchHelper(callback).attachToRecyclerView(recyclerView)
     }
-    ItemTouchHelper(callback).attachToRecyclerView(recyclerView)
-}
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -91,7 +91,10 @@ class MainActivity : AppCompatActivity() {
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.active -> todoViewModel.findSelect(0).observe(this@MainActivity, observer)
-                    R.id.completed -> todoViewModel.findSelect(1).observe(this@MainActivity, observer)
+                    R.id.completed -> todoViewModel.findSelect(1).observe(
+                        this@MainActivity,
+                        observer
+                    )
                     else -> todoViewModel.findAll().observe(this@MainActivity, observer)
                 }
                 true
